@@ -150,7 +150,7 @@ def full_list():
 	cursor = g.conn.execute("SELECT * FROM player")
 	rows = cursor.fetchall()
 	results = []
-	results.append("{}   {}   {}   {}   {}   {}   {}   {}".format("player_id", "name", "position", "hometown", "dob", "height", "number", "team_id")
+	results.append("{}   {}   {}   {}   {}   {}   {}   {}".format("player_id", "name", "position", "hometown", "dob", "height", "number", "team_id"))
 	for row in rows:
 		results.append(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
 	cursor.close()
