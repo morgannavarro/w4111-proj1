@@ -147,31 +147,12 @@ def index():
 
 @app.route('/full_list')
 def full_list():
-	cursor = g.conn.cursor()
-	cursor.execute("SELECT * FROM player")
+	cursor g.conn.execute("SELECT * FROM player")
 	rows = cursor.fetchall()
-	widths = []
-	columns = []
-	tavnit = '|'
-	separator = '+'
-	desc = cursor.description
-	
-	for cd in desc:
-   		widths.append(max(cd[2], len(cd[0])))
-    		columns.append(cd[0])
-
-	for w in widths:
-    		tavnit += " %-"+"%ss |" % (w,)
-    		separator += '-'*w + '--+'
-
 	results = []
-	results.append(separator)
-	results.append(tavnit % tuple(columns))
-	results.append(separator)
+	results.append("{}   {}   {}   {}   {}   {}   {}   {}".format("player_id", "name", "position", "hometown", "dob", "height", "number", "team_id")
 	for row in rows:
-		results.append(tavnit % row)
-	results.append(separator)
-
+		results.append(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
 	cursor.close()
 	context = dict(data = results)
 	return render_template("full_list.html", **context)
