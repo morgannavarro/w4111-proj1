@@ -42,16 +42,6 @@ DATABASEURI = "postgresql://msn2139:Messi272@35.231.44.137/proj1part2"
 #
 engine = create_engine(DATABASEURI)
 
-#
-# Example of running queries in your database
-# Note that this will probably not work if you already have a table named 'test' in your database, containing meaningful data. This is only an example showing you how to run queries in your database using SQLAlchemy.
-#
-engine.execute("""CREATE TABLE IF NOT EXISTS test (
-  id serial,
-  name text
-);""")
-engine.execute("""INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');""")
-
 
 @app.before_request
 def before_request():
@@ -154,17 +144,15 @@ def index():
   #
   return render_template("index.html", **context)
 
-#
-# This is an example of a different path.  You can see it at:
-# 
-#     localhost:8111/another
-#
-# Notice that the function name is another() rather than index()
-# The functions for each app.route need to have different names
-#
-@app.route('/another')
-def another():
-  return render_template("another.html")
+@app.route('/full_list')
+def full_list():
+	cursor=g.conn.execute("SELECT * FROM player")
+	names = []
+	for result in cursor:
+		names.append(result[0])
+	cursor.close()
+	context = dict(data = names)
+	return render_template("full_list.html", **context)
 
 
 # Example of adding new data to the database
