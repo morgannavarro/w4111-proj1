@@ -148,14 +148,14 @@ def index():
 @app.route('/full_list')
 def full_list():
 	cursor = g.conn.execute("SELECT * FROM player")
-	g.conn.commit()
 	rows = cursor.fetchall()
 	widths = []
 	columns = []
 	tavnit = '|'
 	separator = '+'
+	desc = cursor.description
 	
-	for cd in cursor.description:
+	for cd in desc:
    		widths.append(max(cd[2], len(cd[0])))
     		columns.append(cd[0])
 
