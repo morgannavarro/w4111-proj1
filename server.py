@@ -148,8 +148,7 @@ def index():
 def full_list():
 	cursor=g.conn.execute("SELECT * FROM player")
 	rows = cursor.fetchall()
-	for row in rows:
-		rows.append("{} {} {} {} {} {} {} {}".format(row["player_id"], row["name"], row["position"], row["hometown"], row["dob"], row["height"], row["number"], row["team_id"]))
+	rows.append("{} {} {} {} {} {} {} {}".format("player_id", "name", "position","hometown","dob", "height", "number","team_id"))
 	cursor.close()
 	context = dict(data = rows)
 	return render_template("full_list.html", **context)
