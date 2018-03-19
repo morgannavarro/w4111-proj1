@@ -147,7 +147,7 @@ def index():
 
 @app.route('/full_list')
 def full_list():
-	cursor g.conn.execute("SELECT * FROM player")
+	cursor = g.conn.execute("SELECT * FROM player")
 	rows = cursor.fetchall()
 	results = []
 	results.append("{}   {}   {}   {}   {}   {}   {}   {}".format("player_id", "name", "position", "hometown", "dob", "height", "number", "team_id")
