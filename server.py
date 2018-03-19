@@ -165,6 +165,12 @@ def add():
   g.conn.execute('INSERT INTO test VALUES (NULL, ?)', name)
   return redirect('/')
 
+@app.route('/search', methods=['POST'])
+def search():
+	name = request.form['name']
+	g.conn.execute('SELECT player.name, team.name, team.city_name FROM player, team WHERE ?=player.name AND player.team_id=team.team_id', name)
+	return redirect('/')
+
 
 @app.route('/login')
 def login():
