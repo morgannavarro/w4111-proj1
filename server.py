@@ -104,11 +104,11 @@ def index():
   #
   # example of a database query
   #
-  cursor = g.conn.execute("SELECT name FROM test")
-  names = []
-  for result in cursor:
-    names.append(result['name'])  # can also be accessed using result[0]
-  cursor.close()
+#  cursor = g.conn.execute("SELECT name FROM test")
+ # names = []
+  #for result in cursor:
+   # names.append(result['name'])  # can also be accessed using result[0]
+  #cursor.close()
 
   #
   # Flask uses Jinja templates, which is an extension to HTML where you can
@@ -136,18 +136,19 @@ def index():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #
-  context = dict(data = names)
+  #context = dict(data = names)
 
 
   #
   # render_template looks in the templates/ folder for files.
   # for example, the below file reads template/index.html
   #
-  return render_template("index.html", **context)
+  #return render_template("index.html", **context)
 
 @app.route('/full_list')
 def full_list():
-	cursor=g.conn.execute("SELECT * FROM player")
+	cursor = g.conn.execute("SELECT * FROM player")
+	conn.commit()
 	rows = cursor.fetchall()
 	widths = []
 	columns = []
