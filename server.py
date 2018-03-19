@@ -168,8 +168,15 @@ def add():
 @app.route('/search', methods=['POST'])
 def search():
 	name = request.form['name']
-	g.conn.execute('SELECT player.name, team.name, team.city_name FROM player, team WHERE player.name=%s AND player.team_id=team.team_id', name)
-	return redirect('/')
+	cursor = g.conn.execute('SELECT player.name, team.name, team.city_name FROM player, team WHERE player.name=%s AND player.team_id=team.team_id', name)
+	rows = cursor.fetchall()
+	results = []
+	results.append("{}    {}    {}".format("player_name", "team_name", "team_city"))
+	for row in rows:
+		results.append(row)
+	cursor.close()
+	context = dict(data = results)
+	return render_template("index.html", **context)
 
 
 @app.route('/login')
