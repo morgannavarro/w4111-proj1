@@ -146,7 +146,7 @@ def index():
 
 @app.route('/full_list')
 def full_list():
-	cursor=g.conn.execute("SELECT * FROM player")
+	cursor=g.conn.execute("SELECT name FROM player")
 	names = []
 	for result in cursor:
 		names.append(result[0])
