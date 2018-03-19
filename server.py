@@ -148,7 +148,7 @@ def index():
 @app.route('/full_list')
 def full_list():
 	cursor = g.conn.execute("SELECT * FROM player")
-	conn.commit()
+	g.conn.commit()
 	rows = cursor.fetchall()
 	widths = []
 	columns = []
