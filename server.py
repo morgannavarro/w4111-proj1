@@ -148,9 +148,29 @@ def index():
 def full_list():
 	cursor=g.conn.execute("SELECT * FROM player")
 	rows = cursor.fetchall()
-	rows.append("{} {} {} {} {} {} {} {}".format("player_id", "name", "position","hometown","dob", "height", "number","team_id"))
+	widths = []
+	columns = []
+	tavnit = '|'
+	separator = '+'
+	
+	for cd in cursor.description:
+   		widths.append(max(cd[2], len(cd[0])))
+    		columns.append(cd[0])
+
+	for w in widths:
+    		tavnit += " %-"+"%ss |" % (w,)
+    		separator += '-'*w + '--+'
+
+	results = []
+	results.append(separator)
+	results.append(tavnit % tuple(columns))
+	results.append(separator)
+	for row in rows:
+		results.append(tavnit % row)
+	results.append(separator)
+
 	cursor.close()
-	context = dict(data = rows)
+	context = dict(data = results)
 	return render_template("full_list.html", **context)
 
 
