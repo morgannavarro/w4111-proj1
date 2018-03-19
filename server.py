@@ -149,7 +149,7 @@ def full_list():
 	cursor=g.conn.execute("SELECT * FROM player")
 	rows = cursor.fetchall()
 	for row in rows:
-		names.append("{} {} {} {} {} {} {} {}".format(row["player_id"], row["name"], row["position"], row["hometown"], row["dob"], row["height"], row["number"], row["team_id"])
+		names.append("{} {} {} {} {} {} {} {}".format(row["player_id"], row["name"], row["position"], row["hometown"], row["dob"], row["height"], row["number"], row["team_id"]))
 	cursor.close()
 	context = dict(data = names)
 	return render_template("full_list.html", **context)
