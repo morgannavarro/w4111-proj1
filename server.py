@@ -167,8 +167,8 @@ def add():
 
 @app.route('/search', methods=['POST'])
 def search():
-	name = request.form['name']
-	g.conn.execute('SELECT player.name, team.name, team.city_name FROM player, team WHERE player.name=? AND player.team_id=team.team_id', name)
+	name = str( request.form['name'])
+	g.conn.execute('SELECT player.name, team.name, team.city_name FROM player, team WHERE str(player.name)=? AND player.team_id=team.team_id', name)
 	return redirect('/')
 
 
