@@ -99,6 +99,25 @@ def search():
 	context = dict(data = results)
 	return render_template("index.html", **context)
 
+@app.route('/sortplayers', methods=['POST'])
+def sortplayers():
+	sortby = request.form['sortplayer']
+	if(sortby=='team'):
+		cursor = g.conn.execute('SELECT player.name, team.name FROM player, team WHERE player.team_id=team.team_id GROUP BY team.name')
+	elif(sortby=='position'):
+		cursor = g.conn.execute('SELECT player.name, player.position FROM player GROUP BY player.position')
+	elif(sortby=='height'):
+		cursor = g.conn.execute('SELECT player.name, player.height FROM player ORDER BY player.height ASC')
+	elif(sortby=='dob'):
+		cursor = g.conn.execute('SELECT player.name, player.dob FROM player ORDER BY player.dob ASC')
+		
+	rows = cursor.fetchall()
+	results = []
+	for row in rows:
+		results.append(row)
+	cursor.close()
+	context = dict(datasort = results)
+	return render_template("index.html", **context)
 
 @app.route('/login')
 def login():
