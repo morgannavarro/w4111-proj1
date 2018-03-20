@@ -150,13 +150,24 @@ def full_list():
 	cursor = g.conn.execute("SELECT * FROM player")
 	rows = cursor.fetchall()
 	results = []
-	results.append("{}   {}   {}   {}   {}   {}   {}   {}".format("player_id", "name", "position", "hometown", "dob", "height", "number", "team_id"))
+	results.append("{}    {}    {}    {}    {}    {}    {}    {}".format("player_id", "name", "position", "hometown", "dob", "height", "number", "team_id"))
 	for row in rows:
 		results.append(row)
 	cursor.close()
 	context = dict(data = results)
 	return render_template("full_list.html", **context)
 
+@app.route('/team_list')
+def team_list():
+	cursor = g.conn.execute("SELECT * FROM team")
+	rows = cursor.fetchall()
+	results = []
+	results.append("{}    {}    {}    {}    {}    {}".format("team_id", "name", "league", "mascot", "city_name", "gm_id"))
+	for row in rows:
+		results.append(row)
+	cursor.close()
+	context = dict(data = results)
+	return render_template("team_list.html", **context)
 
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
