@@ -103,7 +103,7 @@ def search():
 def sortplayers():
 	sortby = request.form['sortplayer']
 	if(sortby=='team'):
-		cursor = g.conn.execute('SELECT teams.name, player.name, player.dob, player.height FROM (SELECT DISTINCT name FROM team) AS teams LEFT JOIN player ON teams.team_id=player.team_id ORDER BY teams.name')
+		cursor = g.conn.execute('SELECT teams.name, player.name, player.dob, player.height FROM (SELECT DISTINCT name, team_id FROM team) AS teams LEFT JOIN player ON teams.team_id=player.team_id ORDER BY teams.name')
 	elif(sortby=='position'):
 		cursor = g.conn.execute('SELECT positions.position, player.name, player.dob, player.height FROM (SELECT DISTINCT position FROM player) AS positions LEFT JOIN player ON positions.position = player.position ORDER BY positions.position')
 	elif(sortby=='height'):
