@@ -37,6 +37,22 @@
 	{% endfor %}
 </div>
 
+<form method="POST" action="/averages">
+<p>Calculate:  
+<input list="averages" name="average">
+  <datalist id="averages">
+    <option value="Average Height per Team">
+    <option value="Average Height per Position">
+  </datalist>
+  <input type="submit" value="Calculate">
+</p>
+</form>
+<div>
+	{% for n in dataavg %}
+	<div>{{n}}</div>
+	{% endfor %}
+</div>
+
 </body>
 
 
