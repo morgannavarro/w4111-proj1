@@ -102,6 +102,7 @@ def search():
 @app.route('/sortplayers', methods=['POST'])
 def sortplayers():
 	sortby = request.form['sortplayer']
+	
 	if(sortby=='team'):
 		cursor = g.conn.execute('SELECT teams.name, player.name, player.dob, player.height FROM (SELECT DISTINCT name, team_id FROM team) AS teams LEFT JOIN player ON teams.team_id=player.team_id ORDER BY teams.name')
 	elif(sortby=='position'):
@@ -117,6 +118,23 @@ def sortplayers():
 		results.append(row)
 	cursor.close()
 	context = dict(datasort = results)
+	return render_template("index.html", **context)
+
+@app.route('/averages', methods=['POST'])
+def averages():
+	calcavg = request.form['average']
+	
+	if(calcavg=='Average Height per Team'):
+		cursor = g.conn.execute('SELECT team.name, ROUND(AVG(height),1) FROM player LEFT JOIN team ON player.team_id = team.team_id GROUP BY team.name')
+	elif(calcavg=='Average Height per Position'):
+		cursor = g.conn.execute('SELECT positions.position, ROUND(AVG(height),1) FROM (SELECT DISTINCT position FROM player) AS positions LEFT JOIN player ON positions.position = player.position GROUP BY positions.position ORDER BY positions.position')
+
+	rows = cursor.fetchall()
+	results = []
+	for row in rows:
+		results.append(row)
+	cursor.close()
+	context = dict(dataavg = results)
 	return render_template("index.html", **context)
 
 @app.route('/login')
