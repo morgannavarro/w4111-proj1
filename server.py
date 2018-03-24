@@ -79,6 +79,66 @@ def team_list():
 	context = dict(data = results)
 	return render_template("team_list.html", **context)
 
+@app.route('/coach_list')
+def coach_list():
+	cursor = g.conn.execute("SELECT * FROM coach")
+	rows = cursor.fetchall()
+	results = []
+	results.append("{}    {}    {}    {}    {}    {}".format("coach_id", "name", "position", "hometown", "start_date", "team_id"))
+	for row in rows:
+		results.append(row)
+	cursor.close()
+	context = dict(data = results)
+	return render_template("coach_list.html", **context)
+
+@app.route('/city_list')
+def city_list():
+	cursor = g.conn.execute("SELECT * FROM city")
+	rows = cursor.fetchall()
+	results = []
+	results.append("{}    {}    {}".format("city_name", "state", "team_id"))
+	for row in rows:
+		results.append(row)
+	cursor.close()
+	context = dict(data = results)
+	return render_template("city_list.html", **context)
+
+@app.route('/game_list')
+def game_list():
+	cursor = g.conn.execute("SELECT * FROM game")
+	rows = cursor.fetchall()
+	results = []
+	results.append("{}    {}    {}    {}    {}    {}".format("game_id", "date", "home_score", "away_score", "home_team_id", "away_team_id"))
+	for row in rows:
+		results.append(row)
+	cursor.close()
+	context = dict(data = results)
+	return render_template("game_list.html", **context)
+
+@app.route('/owner_list')
+def owner_list():
+	cursor = g.conn.execute("SELECT * FROM owner")
+	rows = cursor.fetchall()
+	results = []
+	results.append("{}    {}".format("owner_id", "team_id"))
+	for row in rows:
+		results.append(row)
+	cursor.close()
+	context = dict(data = results)
+	return render_template("owner_list.html", **context)
+
+@app.route('/gm_list')
+def gm_list():
+	cursor = g.conn.execute("SELECT * FROM general_manager")
+	rows = cursor.fetchall()
+	results = []
+	results.append("{}    {}    {}".format("gm_id", "name", "team_name"))
+	for row in rows:
+		results.append(row)
+	cursor.close()
+	context = dict(data = results)
+	return render_template("gm_list.html", **context)
+
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
 def add():
