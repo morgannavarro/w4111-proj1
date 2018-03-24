@@ -149,10 +149,10 @@ def add():
 @app.route('/search', methods=['POST'])
 def search():
 	name = request.form['name']
-	cursor = g.conn.execute('SELECT player.name, team.name, team.city_name FROM player, team WHERE player.name=%s AND player.team_id=team.team_id', name)
+	cursor = g.conn.execute('SELECT player.name, player.position, team.name, team.city_name, coach.name FROM player, team, coach WHERE player.name=%s AND player.team_id=team.team_id AND player.team_id=coach.team_id', name)
 	rows = cursor.fetchall()
 	results = []
-	results.append("{}    {}    {}".format("player_name", "team_name", "team_city"))
+	results.append("{}     {}     {}     {}     {}".format("player_name", "player_position", "team_name", "team_city", "coach_name"))
 	for row in rows:
 		results.append(row)
 	cursor.close()
