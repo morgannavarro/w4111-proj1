@@ -10,14 +10,18 @@
 <body>
   <h1>NBA Basketball Database</h1>
 
-<p><a href="full_list">See Full List of Players</a></p>
-<p><a href="team_list">See Full List of Teams</a></p>
-<p><a href="coach_list">See Full List of Coaches</a></p>
-<p><a href="game_list">See Full List of Games</a></p>
-<p><a href="owner_list">See Full List of Owners</a></p>
-<p><a href="gm_list">See Full List of General Managers</a></p>
-<p><a href="city_list">See Full List of Cities</a></p>
-
+<p>Show Full List of:
+<select name="linklist" onchange="location = this.value;">
+ <option value="full_list">Players</option>
+ <option value="team_list">Teams</option>
+ <option value="coach_list">Coaches</option>
+ <option value="game_list">Games</option>
+ <option value="owner_list">Owners</option>
+ <option value="gm_list">General Managers</option>
+ <option value="city_list">Cities</option>	
+</select>
+</p>
+	
 <form method="POST" action="/search">
 <p>Search for Player by Name: <input type="text" name="name"> <input type="submit" value="Search"></p>
 </form>
